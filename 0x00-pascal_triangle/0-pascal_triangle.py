@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # This function accepts an integer (n)
 # return a list containing the pascal triangle of n
 def pascal_triangle(n):
