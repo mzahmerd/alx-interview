@@ -1,8 +1,12 @@
 #!/usr/bin/python3
 
-# This function accepts an integer (n)
-# return a list containing the pascal triangle of n
+''' This module generate a list of pascal triangle
+given an integer.
+'''
 def pascal_triangle(n):
+    '''This function accepts an integer (n)
+    return a list containing the pascal triangle of n'''
+
     # empty list to store triangles
     triangle = []
 
@@ -19,8 +23,9 @@ def pascal_triangle(n):
         triangle.append([factorial(i)//(factorial(k)*factorial(i-k)) for k in range(i+1)])
     return triangle
 
-# This function accepts an integer n and returns a factorial value of n
+
 def factorial(n):
+    '''This function accepts an integer n and returns a factorial value of n'''
     fact = 1
     if(n==0):
         return 1
