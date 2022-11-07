@@ -13,14 +13,15 @@ def pascal_triangle(n):
     triangle = []
 
     # return an empty list, if n is less than 1
-    if(n<=0): return triangle
+    if (n <= 0):
+        return triangle
 
-    # Generage n number of rows 
+    # Generage n number of rows
     for i in range(n):
-        # calculate each entry in the triangle with "n choose k" formula 
-        # C(n,c) or n! / k! * (n - k)! 
-        # "!" means factorial: products of a series of 
-        #descending natural numbers of a given number.
+        # calculate each entry in the triangle with "n choose k" formula
+        # C(n,c) or n! / k! * (n - k)!
+        # "!" means factorial: products of a series of
+        # descending natural numbers of a given number.
         row = [fact(i) // (fact(k) * fact(i - k)) for k in range(i + 1)]
         triangle.append(row)
     return triangle
@@ -29,9 +30,9 @@ def pascal_triangle(n):
 def fact(n):
     '''This function accepts an integer n and returns a factorial value of n'''
     factorial = 1
-    if(n==0):
+    if (n == 0):
         return 1
-    while(n > 0):
+    while (n > 0):
         factorial = n * factorial
         n -= 1
     return factorial
