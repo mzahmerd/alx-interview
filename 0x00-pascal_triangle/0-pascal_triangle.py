@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#! / usr / bin / python3
 
 ''' This module generate a list of pascal triangle
 given an integer.
