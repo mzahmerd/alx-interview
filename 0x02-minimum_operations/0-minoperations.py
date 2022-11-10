@@ -24,11 +24,15 @@ def minOperations(n):
     '''This function accept an intenger n
     and return the fewest number of copy
     and paste operations needed to create n number of H'''
+    ops = 0
+    chars = 'H'
+
+    # impossible case
+    if n <= 0:
+        return ops
 
     # Generate prime factors of n
     factors = prime_factors(n)
-    ops = 0
-    chars = 'H'
 
     # Iterate through the factors and perform operations
     # upto number of the available facotrs
