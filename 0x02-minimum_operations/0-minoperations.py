@@ -30,8 +30,6 @@ def minOperations(n):
     # impossible case
     if n <= 0:
         return ops
-    if n <= 1:
-        return 1
     # Generate prime factors of n
     factors = prime_factors(n)
 
