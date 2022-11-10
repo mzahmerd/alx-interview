@@ -5,29 +5,38 @@ and return the fewest number of copy
 and paste operations needed to create n number of H'''
 
 
+def prime_factors(num):
+    '''This function generate a list prime factors of a given number'''
+    i = 2
+    factors = []
+    while i * i <= num:
+        if num % i:
+            i += 1
+        else:
+            num //= i
+            factors.append(i)
+    if num > 1:
+        factors.append(num)
+    return factors
+
+
 def minOperations(n):
     '''This function accept an intenger n
     and return the fewest number of copy
     and paste operations needed to create n number of H'''
 
+    # Generate prime factors of n
+    factors = prime_factors(n)
     ops = 0
     chars = 'H'
-    # keeps accumulating as long as number of H's
-    # is not upto n
-    while (len(chars) < n):
-        # Copy operation
-        cChars = chars
-        # increment numbers of operations performed
-        ops += 1
-        # Paste operation
-        chars += cChars
-        ops += 1
-        # Paste again, if number of H's is not upto n
-        if (len(chars) < n):
-            chars += cChars
+
+    # Iterate through the factors and perform operations
+    # upto number of the available facotrs
+    while factors != []:
+        cCopy = chars
+        for i in range(factors[0]):
+            chars += cCopy
             ops += 1
-        # Paste again, if this will be the last operation
-        if (len(chars) < n and len(chars) + len(cChars) >= n):
-            chars += cChars
-            ops += 1
+        factors.remove(factors[0])
+
     return ops
