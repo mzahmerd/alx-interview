@@ -43,3 +43,6 @@ def minOperations(n):
         factors.remove(factors[0])
 
     return ops
+
+
+print(minOperations(2147483640))
