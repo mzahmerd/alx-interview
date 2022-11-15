@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-import sys
-import re
 '''This module recieved logs from command line,
 parse and print out some stats'''
+import sys
+import re
 
 
 def match_format(line=""):
