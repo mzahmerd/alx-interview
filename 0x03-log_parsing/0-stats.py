@@ -1,52 +1,68 @@
 #!/usr/bin/python3
 import sys
-import re
-'''This module recieved logs from command line,
-parse and print out some stats'''
+"""
+a python script that reads stdin line by line & computes metrics
+the format must be
+File size: <total size>
+<status code>: <number>
+"""
 
 
-def match_format(line=""):
-    '''Check if the line match required format using regex'''
-
-    return re.match(
-        r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d*\] \"GET /projects/260 HTTP/1.1\" (200|301|400|401|403|404|405|500) \d+$", line
-    )
-
-
-def log_line(line):
-    '''Take line and take necessary data for statistics'''
-    line = line[:-1]
-    words = line.split(" ")
-    file_size[0] += int(words[-1])
-    code = int(words[-2])
-    if code in codes:
-        codes[code] += 1
-
-
-def print_stats():
-    '''print statistics of current files'''
-    print("File size: {}".format(file_size))
-    for code in codes.keys():
-        if codes[code]:
-            print("{}: {}".format(code, codes[code]))
+def get_size(line):
+    """
+    get_size: functin to read a line and find the total size
+    Arguments:
+        line: the given line
+    Returns:
+        the total size
+    """
+    line_spt = line.split()
+    first_ocatet = line_spt[0].split('.')[0]
+    first_ocatet = int(first_ocatet)
+    if len(line_spt) != 9 or first_ocatet > 255 or first_ocatet < 0:
+        return 0
+    s_code = line_spt[-2]
+    if s_code in status_code:
+        status_code[s_code] += 1
+    size = int(line_spt[-1])
+    return size
 
 
-if __name__ == "__main__":
-    file_size = [0]
-    codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
-    count = 1
+def display():
+    """
+    display - function to display the status in the mentioned format
+    Argumetns:
+        nothing
+    Returns:
+        nothing
+    """
+    print("File size: {}".format(f_size))
+    for key, value in status_code.items():
+        if value != 0:
+            print("{}: {}".format(key, value))
 
+
+if __name__ == '__main__':
+    """
+    entry point of the program
+    """
+    f_size = 0
+    nbr_line = 0
+    status_code = {
+        "200": 0,
+        "301": 0,
+        "400": 0,
+        "401": 0,
+        "403": 0,
+        "404": 0,
+        "405": 0,
+        "500": 0
+    }
     try:
         for line in sys.stdin:
-            # Skip, if the line format is not valid
-            if not match_format(line):
-                continue
-            # log data for statistics
-            log_line(line)
-            if count % 10 == 0:
-                print_stats()
-            count += 1
+            f_size += get_size(line)
+            if nbr_line % 10 == 0:
+                display()
+            nbr_line += 1
     except KeyboardInterrupt:
-        print_stats()
-        raise
-    print_stats()
+        display()
