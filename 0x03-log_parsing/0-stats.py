@@ -4,17 +4,27 @@ parse and print out some stats'''
 import sys
 
 
+def match_format(line=""):
+    '''Check if the line match required format using regex'''
+    line_spt = line.split()
+    first_ocatet = int(line_spt[0].split('.')[0])
+    if len(line_spt) != 9 or first_ocatet > 255 or first_ocatet < 0:
+        return 0
+    s_code = line_spt[-2]
+    if s_code not in codes:
+        return 0
+    return 1
+
+
 def log_line(line):
     '''Take line and take necessary data for statistics'''
-    try:
-        line = line[:-1]
-        words = line.split(" ")
-        file_size[0] += int(words[-1])
-        code = int(words[-2])
-        if code in codes:
-            codes[code] += 1
-    except:
-        pass
+
+    line = line[:-1]
+    words = line.split(" ")
+    file_size[0] += int(words[-1])
+    code = int(words[-2])
+    if code in codes:
+        codes[code] += 1
 
 
 def print_stats():
@@ -33,8 +43,8 @@ if __name__ == "__main__":
     try:
         for line in sys.stdin:
             # Skip, if the line format is not valid
-            # if not match_format(line):
-            #     continue
+            if not match_format(line):
+                continue
             # log data for statistics
             log_line(line)
             if count % 10 == 0:
@@ -43,4 +53,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print_stats()
         raise
-    print_stats()
+    # print_stats()
