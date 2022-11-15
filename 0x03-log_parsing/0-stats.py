@@ -6,25 +6,30 @@ import sys
 
 def match_format(line=""):
     '''Check if the line match required format using regex'''
-    line_spt = line.split()
-    first_ocatet = int(line_spt[0].split('.')[0])
-    if len(line_spt) != 9 or first_ocatet > 255 or first_ocatet < 0:
-        return 0
-    s_code = line_spt[-2]
-    if s_code not in codes:
+    try:
+        line_spt = line.split()
+        first_ocatet = int(line_spt[0].split('.')[0])
+        if len(line_spt) != 9 or first_ocatet > 255 or first_ocatet < 0:
+            return 0
+        s_code = line_spt[-2]
+        if s_code not in codes:
+            return 0
+    except:
         return 0
     return 1
 
 
 def log_line(line):
     '''Take line and take necessary data for statistics'''
-
-    line = line[:-1]
-    words = line.split(" ")
-    file_size[0] += int(words[-1])
-    code = int(words[-2])
-    if code in codes:
-        codes[code] += 1
+    try:
+        line = line[:-1]
+        words = line.split(" ")
+        file_size[0] += int(words[-1])
+        code = int(words[-2])
+        if code in codes:
+            codes[code] += 1
+    except:
+        pass
 
 
 def print_stats():
