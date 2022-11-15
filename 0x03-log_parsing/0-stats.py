@@ -42,8 +42,8 @@ if __name__ == "__main__":
     try:
         for line in sys.stdin:
             # Skip, if the line format is not valid
-            if not match_format(line):
-                continue
+            # if not match_format(line):
+            #     continue
             # log data for statistics
             log_line(line)
             if count % 10 == 0:
