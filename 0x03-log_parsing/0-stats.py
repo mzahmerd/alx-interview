@@ -1,37 +1,47 @@
-#!/usr/bin/python3
 import sys
-'''This module recieved logs from command line, parse and print out some stats'''
+import re
+'''This module recieved logs from command line,
+parse and print out some stats'''
 
 
 if __name__ == "__main__":
-    size = [0]
+    file_size = [0]
     codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+    count = 1
 
-    def check_match(line):
-        '''Checks for regexp match in line.'''
-        try:
-            line = line[:-1]
-            words = line.split(" ")
-            size[0] += int(words[-1])
-            code = int(words[-2])
-            if code in codes:
-                codes[code] += 1
-        except:
-            pass
+    def match_format(line=""):
+        '''Check if the line match required format using regex'''
+
+        return re.match(
+            r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d*\] \"GET /projects/260 HTTP/1.1\" (200|301|400|401|403|404|405|500) \d+$", line
+        )
+
+    def log_line(line):
+        '''Take line and take necessary data for statistics'''
+        line = line[:-1]
+        words = line.split(" ")
+        file_size[0] += int(words[-1])
+        code = int(words[-2])
+        if code in codes:
+            codes[code] += 1
 
     def print_stats():
-        '''Prints accumulated statistics.'''
-        print("File size: {}".format(size[0]))
-        for k in sorted(codes.keys()):
-            if codes[k]:
-                print("{}: {}".format(k, codes[k]))
-    i = 1
+        '''print statistics of current files'''
+        print("File size: {}".format(file_size))
+        for code in codes.keys():
+            if codes[code]:
+                print("{}: {}".format(code, codes[code]))
+
     try:
         for line in sys.stdin:
-            check_match(line)
-            if i % 10 == 0:
+            # Skip, if the line format is not valid
+            if not match_format(line):
+                continue
+            # log data for statistics
+            log_line(line)
+            if count % 10 == 0:
                 print_stats()
-            i += 1
+            count += 1
     except KeyboardInterrupt:
         print_stats()
         raise
