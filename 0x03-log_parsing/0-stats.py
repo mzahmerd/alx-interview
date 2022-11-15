@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import sys
 import re
 '''This module recieved logs from command line,
