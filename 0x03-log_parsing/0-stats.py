@@ -1,68 +1,38 @@
 #!/usr/bin/python3
-"""
-a python script that reads stdin line by line & computes metrics
-the format must be
-File size: <total size>
-<status code>: <number>
-"""
+'''Module for log parsing script.'''
 import sys
 
 
-def get_size(line):
-    """
-    get_size: functin to read a line and find the total size
-    Arguments:
-        line: the given line
-    Returns:
-        the total size
-    """
-    line_spt = line.split()
-    first_ocatet = line_spt[0].split('.')[0]
-    first_ocatet = int(first_ocatet)
-    if len(line_spt) != 9 or first_ocatet > 255 or first_ocatet < 0:
-        return 0
-    s_code = line_spt[-2]
-    if s_code in status_code:
-        status_code[s_code] += 1
-    size = int(line_spt[-1])
-    return size
+if __name__ == "__main__":
+    size = [0]
+    codes = {200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
 
+    def check_match(line):
+        '''Checks for regexp match in line.'''
+        try:
+            line = line[:-1]
+            words = line.split(" ")
+            size[0] += int(words[-1])
+            code = int(words[-2])
+            if code in codes:
+                codes[code] += 1
+        except:
+            pass
 
-def display():
-    """
-    display - function to display the status in the mentioned format
-    Argumetns:
-        nothing
-    Returns:
-        nothing
-    """
-    print("File size: {}".format(f_size))
-    for key, value in status_code.items():
-        if value != 0:
-            print("{}: {}".format(key, value))
-
-
-if __name__ == '__main__':
-    """
-    entry point of the program
-    """
-    f_size = 0
-    nbr_line = 0
-    status_code = {
-        "200": 0,
-        "301": 0,
-        "400": 0,
-        "401": 0,
-        "403": 0,
-        "404": 0,
-        "405": 0,
-        "500": 0
-    }
+    def print_stats():
+        '''Prints accumulated statistics.'''
+        print("File size: {}".format(size[0]))
+        for k in sorted(codes.keys()):
+            if codes[k]:
+                print("{}: {}".format(k, codes[k]))
+    i = 1
     try:
         for line in sys.stdin:
-            f_size += get_size(line)
-            if nbr_line % 10 == 0:
-                display()
-            nbr_line += 1
+            check_match(line)
+            if i % 10 == 0:
+                print_stats()
+            i += 1
     except KeyboardInterrupt:
-        display()
+        print_stats()
+        raise
+    print_stats()
