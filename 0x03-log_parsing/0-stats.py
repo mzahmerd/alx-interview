@@ -25,7 +25,7 @@ def log_line(line):
 
 def print_stats():
     '''print statistics of current files'''
-    print("File size: {}".format(file_size))
+    print("File size: {}".format(file_size[0]))
     for code in codes.keys():
         if codes[code]:
             print("{}: {}".format(code, codes[code]))
