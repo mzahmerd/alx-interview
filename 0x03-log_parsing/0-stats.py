@@ -2,15 +2,6 @@
 '''This module recieved logs from command line,
 parse and print out some stats'''
 import sys
-import re
-
-
-def match_format(line=""):
-    '''Check if the line match required format using regex'''
-
-    return re.match(
-        r"^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{1,4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}.\d*\] \"GET /projects/260 HTTP/1.1\" (200|301|400|401|403|404|405|500) \d+$", line
-    )
 
 
 def log_line(line):
