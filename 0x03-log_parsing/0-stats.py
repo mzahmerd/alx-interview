@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''This module recieved logs from command line,
-parse and print out some stats'''
+parse and print out some stats.'''
 import sys
 
 
