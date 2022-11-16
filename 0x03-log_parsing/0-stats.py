@@ -20,7 +20,7 @@ def match_format(line=""):
 
 
 def log_line(line):
-    '''Take line and take necessary data for statistics'''
+    '''Take line and take necessary data for statistics.'''
     try:
         line = line[:-1]
         words = line.split(" ")
