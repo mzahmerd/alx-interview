@@ -11,8 +11,8 @@ def match_format(line=""):
         first_ocatet = int(line_spt[0].split('.')[0])
         if len(line_spt) != 9 or first_ocatet > 255 or first_ocatet < 0:
             return 0
-        s_code = line_spt[-2]
-        if s_code not in codes:
+        s_code = int(line_spt[-2])
+        if s_code not in list(codes.keys()):
             return 0
     except:
         return 0
@@ -58,4 +58,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print_stats()
         raise
-
+    print_stats()
