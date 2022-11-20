@@ -13,7 +13,7 @@ def match_format(line=""):
         if len(line_spt) != 9 or first_ocatet > 255 or first_ocatet < 0:
             return 0
         s_code = int(line_spt[-2])
-        if s_code not in list(codes.keys()) or int(line_spt[-1] < 0):
+        if s_code not in list(codes.keys()):
             return 0
     except:
         return 0
