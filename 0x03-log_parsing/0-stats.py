@@ -9,10 +9,11 @@ def match_format(line=""):
     try:
         line_spt = line.split()
         first_ocatet = int(line_spt[0].split('.')[0])
+        # format is valid?
         if len(line_spt) != 9 or first_ocatet > 255 or first_ocatet < 0:
             return 0
         s_code = int(line_spt[-2])
-        if s_code not in list(codes.keys()):
+        if s_code not in list(codes.keys()) or int(line_spt[-1] < 0):
             return 0
     except:
         return 0
