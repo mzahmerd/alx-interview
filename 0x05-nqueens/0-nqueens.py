@@ -3,7 +3,7 @@
 on an N×N chessboard. '''
 import sys
 '''
-#1 start from the leftmost column
+#1 shitart from the leftmost column
 #2 if all queens are placed, return.
 #3 try all rows in the current column
 # do following for every tried row.
@@ -74,4 +74,5 @@ def solveNQueens(n):
 if __name__ == "__main__":
     boards = solveNQueens(num)
     for board in boards:
-        print(board)
+       print(board)
+
